@@ -3,12 +3,12 @@ import { SlLocationPin } from "react-icons/sl";
 import { FaSearch } from "react-icons/fa";
 import { BiCart } from "react-icons/bi";
 import { Link } from "react-router-dom";
-
+import { auth } from "../../Utility/firebase";
 import classes from "./Header.module.css";
 import LowerHeader from "./LowerHeader";
 import { DataContext } from "../DataProvider/DataProvider";
 const Header = () => {
-  const [{ basket }, dispatch] = useContext(DataContext);
+  const [{ user,basket }, dispatch] = useContext(DataContext);
   const totalItem = basket?.reduce((amount,item)=>{
     return item.amount + amount
   },0) 
@@ -43,7 +43,7 @@ const Header = () => {
                 <option value="">All</option>
               </select>
               <input type="text" placeholder="search product" />
-              <FaSearch />
+              <FaSearch size={38} />
             </div>
             {/* right side link */}
             <div className={classes.order_container}>
@@ -57,10 +57,19 @@ const Header = () => {
                 </select>
               </Link>
               {/* three components */}
-              <Link to="/auth">
+              <Link to={!user && "/auth" }>
                 <div>
-                  <p>Sign In</p>
-                  <span>Account & Lists</span>
+                  {
+                    user? <>
+                    <p>Hello, {user.email?.split("@")[0]}</p>
+                    <span onClick={()=>auth.signOut()} >Sign OUt</span>
+                    </>:(<>
+                      <p>Sign In</p>
+                      <span>Account & Lists</span>
+                    </>)
+                  }
+                  
+                  
                 </div>
               </Link>
               {/* orders */}
