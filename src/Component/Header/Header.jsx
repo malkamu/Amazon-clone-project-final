@@ -44,7 +44,7 @@ const Header = () => {
                 <option value="">All</option>
               </select>
               <input type="text" placeholder="search product" />
-              <FaSearch size={17} />
+              <FaSearch size={38} />
             </div>
             {/* right side link */}
             <div className={classes.order_container}>

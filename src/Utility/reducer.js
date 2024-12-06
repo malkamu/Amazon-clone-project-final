@@ -41,6 +41,11 @@ export const reducer = (state, action) => {
           newBasket.splice(index, 1);
         }
       }
+    case Type.SET_USER:
+      return {
+        ...state,
+        user: action.user,
+      };
       return {
         ...state,
         basket: newBasket,
